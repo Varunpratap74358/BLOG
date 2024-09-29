@@ -3,12 +3,29 @@ import { IoMdHome } from "react-icons/io";
 import { IoNotificationsSharp, IoSearch } from "react-icons/io5";
 import { FaBookmark } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa";
-import { FiHash } from "react-icons/fi";
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { FiHash, FiLogOut } from "react-icons/fi";
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { USER_API_POINT } from '../apis/api';
+import { setSuggestedUser, setUser, setUserProfile } from '../redux/authSlice';
 
 const LeftSidebar = () => {
   const {user} = useSelector(store=>store.auth)
+const navigate = useNavigate("")
+const dispatch =useDispatch()
+  const logoutHandler =async ()=>{
+    try {
+      const {data} = await axios.get(`${USER_API_POINT}/logout`,{withCredentials:true})
+      dispatch(setUser(null))
+      dispatch(setSuggestedUser([]))
+      dispatch(setUserProfile(null))
+      navigate('/login')
+      alert(data.message)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <div className="w-[20%]">
       <div className='flex'>
@@ -46,6 +63,12 @@ const LeftSidebar = () => {
                 <FaBookmark  size={30} />
                 </div>
                 <h1 className='font-semibold ml-4'>Bookmark</h1>
+            </div>
+            <div onClick={logoutHandler} className='flex cursor-pointer items-center py-2 w-[150px] hover:bg-slate-200 duration-[0.3s] rounded-md'>
+                <div >
+                <FiLogOut  size={30} />
+                </div>
+                <h1 className='font-semibold ml-4'>Logout</h1>
             </div>
             <Link to={`/profile/${user?._id}`} className='flex items-center py-2 px-1 w-[150px] hover:bg-slate-200 duration-[0.3s] rounded-md'>
                 <div>

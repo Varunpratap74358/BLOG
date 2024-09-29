@@ -15,7 +15,7 @@ const Feed = () => {
       <div className="border p-2 flex flex-col gap-2">
         <CreatePost />
         {
-          allTweets && allTweets.map((tweet)=><Tweet tweet={tweet} />)
+          allTweets && allTweets.map((tweet,i)=><Tweet key={i} tweet={tweet} />)
         }
       </div>
     </div>

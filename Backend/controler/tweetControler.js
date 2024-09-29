@@ -34,7 +34,10 @@ export const createTweet = async (req, res) => {
 export const deleteTweet = async (req, res) => {
   try {
     const tweetId = req.params.id
-    if (req.id !== tweetId) {
+    const tweetPost = await Tweet.findById(tweetId)
+    // console.log(tweetPost.userId.toString(),req.id)
+
+    if (req.id !== tweetPost.userId.toString()) {
       return res.status(400).json({
         success: true,
         message: 'Only owner can delete own post',

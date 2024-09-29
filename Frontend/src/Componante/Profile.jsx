@@ -10,7 +10,7 @@ const Profile = () => {
   useGetProfile(params.id)
 
   const { userProfile } = useSelector((store) => store.auth)
-  console.log(userProfile)
+  // console.log(userProfile)
   return (
     <div className="w-[50%] border p-1 my-4">
       <div className="">
